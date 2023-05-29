@@ -1,0 +1,10 @@
+---
+
+- hosts: localhost
+  become: yes
+
+  roles:
+
+  - role: s4a.webinfra   
+    webinfra_install_user: rafa   
+    tags: [ common, webinfra ] 
