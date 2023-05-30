@@ -4,7 +4,7 @@
 # Default installation variables
 # for GitHub checkout
 webinfra_install_user:  pi
-webinfra_install_dir : /home/{{ webinfra_install_user }}/repos/own/web-stars4all
+webinfra_install_dir : /tmp
 webinfra_venv:  "{{ webinfra_install_dir }}/.venv"
 # Django project name (subfolder inside webinfra_install_dir)
 webinfra_django_project: django_project

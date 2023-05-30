@@ -16,6 +16,7 @@
     path: '{{ webinfra_install_dir }}'
     state: directory
     mode: '0755'
+    owner: '{{ webinfra_install_user }}'
 
 - name: Install Django in a virtual environment
   ansible.builtin.pip:

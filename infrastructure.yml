@@ -6,5 +6,6 @@
   roles:
 
   - role: s4a.webinfra   
-    webinfra_install_user: rafa   
+    webinfra_install_user: rafa
+    webinfra_install_dir : /home/{{ webinfra_install_user }}/repos/own/web-stars4all   
     tags: [ common, webinfra ] 
