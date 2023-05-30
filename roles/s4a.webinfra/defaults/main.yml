@@ -3,14 +3,11 @@
 
 # Default installation variables
 # for GitHub checkout
-webinfra_install_user:  pi
+
 webinfra_install_dir : /tmp
 webinfra_venv:  "{{ webinfra_install_dir }}/.venv"
 # Django project name (subfolder inside webinfra_install_dir)
 webinfra_django_project: django_project
-
-# run time user
-webinfra_runtime_user: pi
 
 webinfra_postgres_state: absent
 webinfra_postgres_volume: /tmp

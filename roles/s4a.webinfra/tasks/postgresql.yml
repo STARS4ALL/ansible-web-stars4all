@@ -5,7 +5,7 @@
     name:  pginfra
     state: '{{ webinfra_postgres_state }}'
     ports:
-      - "9876:8080"
+      - "9876:80"
 
 - name: Deploy and run a pgadmin container and link it to its infrastructure pod
   containers.podman.podman_container:
@@ -23,7 +23,6 @@
     state: directory
     recurse: yes
     mode: '0755'
-    owner: '{{ webinfra_install_user }}'
 
 - name:  Deploy the PostgreSQL RDBMS container and link it to the infrastcuture container
   containers.podman.podman_container:

@@ -16,7 +16,6 @@
     path: '{{ webinfra_install_dir }}'
     state: directory
     mode: '0755'
-    owner: '{{ webinfra_install_user }}'
 
 - name: Install Django in a virtual environment
   ansible.builtin.pip:
@@ -40,8 +39,6 @@
   ansible.builtin.copy:
     src: '{{ item }}'
     dest: '{{ webinfra_install_dir }}/{{ item }}'
-    owner: '{{ webinfra_install_user }}'
-    group: '{{ webinfra_install_user }}'
     mode: '0644'
   loop:
     - .gitignore
@@ -57,7 +54,5 @@
   ansible.builtin.template:
     src: django_project/settings.py.j2
     dest: '{{ webinfra_install_dir }}/{{ webinfra_django_project }}/settings.py'
-    owner: '{{ webinfra_install_user }}'
-    group: '{{ webinfra_install_user }}'
     mode: '0644'
     backup: yes

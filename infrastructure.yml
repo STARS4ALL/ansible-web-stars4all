@@ -1,7 +1,8 @@
 ---
 
-- hosts: localhost
+- hosts: webservers
   become: yes
+  become_user: rafa
 
   roles:
 
@@ -9,7 +10,6 @@
     webinfra_install_user: rafa
     webinfra_install_dir : /home/{{ webinfra_install_user }}/repos/own/web-stars4all
     webinfra_venv:        '{{ webinfra_install_dir }}/.venv'  
-    webinfra_postgres_pod: pginfra  
     webinfra_postgres_state: started
     webinfra_postgres_volume: /home/{{ webinfra_install_user }}/foo/pgdata
     tags: [ common, webinfra ] 
