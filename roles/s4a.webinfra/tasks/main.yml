@@ -39,14 +39,6 @@
     creates: '{{ webinfra_install_dir }}/requirements.txt'
   become: true
   become_user: '{{ webinfra_install_user }}'
-  
-- name: Create a Django project inside our project 
-  command: '{{ webinfra_venv }}/bin/django-admin startproject {{ webinfra_django_project }} .'
-  args:
-    chdir: '{{ webinfra_install_dir }}'
-    creates: '{{ webinfra_django_project }}/__init__.py'
-  become: true
-  become_user: '{{ webinfra_install_user }}'
 
 - name: Setup some other project-level common files
   ansible.builtin.copy:
@@ -58,3 +50,20 @@
   loop:
     - .gitignore
     - .dockerignore
+
+- name: Create a Django project skeleton inside our project 
+  command: '{{ webinfra_venv }}/bin/django-admin startproject {{ webinfra_django_project }} .'
+  args:
+    chdir: '{{ webinfra_install_dir }}'
+    creates: '{{ webinfra_django_project }}/__init__.py'
+  become: true
+  become_user: '{{ webinfra_install_user }}'
+
+- name: Patch settings.py with convenient customizations
+  ansible.builtin.template:
+    src: django_project/settings.py.j2
+    dest: '{{ webinfra_install_dir }}/{{ webinfra_django_project }}/settings.py'
+    owner: '{{ webinfra_install_user }}'
+    group: '{{ webinfra_install_user }}'
+    mode: '0644'
+    backup: yes

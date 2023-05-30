@@ -7,5 +7,6 @@
 
   - role: s4a.webinfra   
     webinfra_install_user: rafa
-    webinfra_install_dir : /home/{{ webinfra_install_user }}/repos/own/web-stars4all   
+    webinfra_install_dir : /home/{{ webinfra_install_user }}/repos/own/web-stars4all
+    webinfra_venv:        '{{ webinfra_install_dir }}/.venv'   
     tags: [ common, webinfra ] 
