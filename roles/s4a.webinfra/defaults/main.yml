@@ -11,3 +11,9 @@ webinfra_django_project: django_project
 
 # run time user
 webinfra_runtime_user: pi
+
+webinfra_postgres_state: absent
+webinfra_postgres_volume: /tmp
+
+
+

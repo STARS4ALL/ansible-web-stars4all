@@ -6,11 +6,10 @@
       - git
       - podman
     state: present
+  become_user: root
 
 - name: make sure we upgrade pip3 module to latest version
   ansible.builtin.command: python3 -m pip install --upgrade pip
-  become: true
-  become_user: '{{ webinfra_install_user }}'
 
 - name: Create project directory
   ansible.builtin.file:
@@ -31,15 +30,11 @@
       - "environs[django]~=9.5.0" # Fancy handlig on envorinment variables
     virtualenv: '{{ webinfra_venv }}'
     virtualenv_command : python3 -m venv
-  become: true
-  become_user: '{{ webinfra_install_user }}'
 
 - name: generates a requirements.txt file
   ansible.builtin.shell: '{{ webinfra_venv }}/bin/pip freeze > {{ webinfra_install_dir }}/requirements.txt'
   args:
     creates: '{{ webinfra_install_dir }}/requirements.txt'
-  become: true
-  become_user: '{{ webinfra_install_user }}'
 
 - name: Setup some other project-level common files
   ansible.builtin.copy:
@@ -57,8 +52,6 @@
   args:
     chdir: '{{ webinfra_install_dir }}'
     creates: '{{ webinfra_django_project }}/__init__.py'
-  become: true
-  become_user: '{{ webinfra_install_user }}'
 
 - name: Patch settings.py with convenient customizations
   ansible.builtin.template:

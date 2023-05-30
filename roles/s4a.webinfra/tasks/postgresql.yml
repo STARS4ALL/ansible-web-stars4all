@@ -1,0 +1,38 @@
+---
+# tasks file for s4a.webinfra
+- name: Deploy the PostgreSQL infrastructure pod
+  containers.podman.podman_pod:
+    name:  pginfra
+    state: '{{ webinfra_postgres_state }}'
+    ports:
+      - "9876:8080"
+
+- name: Deploy and run a pgadmin container and link it to its infrastructure pod
+  containers.podman.podman_container:
+    name: pgadmin
+    pod:  pginfra
+    image: docker.io/dpage/pgadmin4:latest
+    state: '{{ webinfra_postgres_state} }'
+    env:
+        PGADMIN_DEFAULT_EMAIL: "rafael08@ucm.es"
+        PGADMIN_DEFAULT_PASSWORD: "Passw0rd"
+
+- name: Create volume for PostgreSQL data
+  ansible.builtin.file:
+    path: '{{ webinfra_postgres_volume }}'
+    state: directory
+    recurse: yes
+    mode: '0755'
+    owner: '{{ webinfra_install_user }}'
+
+- name:  Deploy the PostgreSQL RDBMS container and link it to the infrastcuture container
+  containers.podman.podman_container:
+    name: postgresql
+    pod:  pginfra
+    image: docker.io/library/postgres:14
+    state: '{{ webinfra_postgres_state }}'
+    volumes:
+      - '{{ webinfra_postgres_volume }}:/var/lib/postgresql/data'
+    env:
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: Passw0rd
