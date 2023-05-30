@@ -12,7 +12,7 @@
     name: pgadmin
     pod:  pginfra
     image: docker.io/dpage/pgadmin4:latest
-    state: '{{ webinfra_postgres_state} }'
+    state: '{{ webinfra_postgres_state }}'
     env:
         PGADMIN_DEFAULT_EMAIL: "rafael08@ucm.es"
         PGADMIN_DEFAULT_PASSWORD: "Passw0rd"
