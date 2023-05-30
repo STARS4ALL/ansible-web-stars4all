@@ -23,8 +23,9 @@
     state: directory
     recurse: yes
     mode: '0755'
+  ignore_errors: yes # The postgres container changes the user id !
 
-- name:  Deploy the PostgreSQL RDBMS container and link it to the infrastcuture container
+- name:  Deploy the PostgreSQL RDBMS container and link it to the infrastructure container
   containers.podman.podman_container:
     name: postgresql
     pod:  pginfra

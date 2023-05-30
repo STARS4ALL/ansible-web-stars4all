@@ -1,0 +1,7 @@
+---
+- name: Allow pgadmin webserver on port 9876
+  ansible.posix.firewalld:
+    port: 9876/tcp
+    permanent: false
+    state: enabled
+  become_user: root
