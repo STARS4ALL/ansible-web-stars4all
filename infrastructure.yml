@@ -11,4 +11,5 @@
     webinfra_venv:        '{{ webinfra_install_dir }}/.venv'  
     webinfra_postgres_state: started
     webinfra_postgres_volume: /home/{{ ansible_user }}/foo/pgdata
+    webinfra_pgadmin_port: 9876
     tags: [ common, webinfra ] 

@@ -1,7 +1,9 @@
 ---
-- name: Allow pgadmin webserver on port 9876
+- name: Open PostgreSQL TCP Ports
   ansible.posix.firewalld:
-    port: 9876/tcp
+    port: '{{ item }}/tcp'
     permanent: false
     state: enabled
   become_user: root
+  loop:
+    - '{{ webinfra_pgadmin_port }}'
