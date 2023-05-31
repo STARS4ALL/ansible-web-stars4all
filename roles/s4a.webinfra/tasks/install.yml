@@ -4,7 +4,6 @@
   ansible.builtin.package:
     name:
       - git
-      - podman
     state: present
   become_user: root
 
@@ -29,30 +28,3 @@
       - "environs[django]~=9.5.0" # Fancy handlig on envorinment variables
     virtualenv: '{{ webinfra_venv }}'
     virtualenv_command : python3 -m venv
-
-- name: generates a requirements.txt file
-  ansible.builtin.shell: '{{ webinfra_venv }}/bin/pip freeze > {{ webinfra_install_dir }}/requirements.txt'
-  args:
-    creates: '{{ webinfra_install_dir }}/requirements.txt'
-
-- name: Setup some other project-level common files
-  ansible.builtin.copy:
-    src: '{{ item }}'
-    dest: '{{ webinfra_install_dir }}/{{ item }}'
-    mode: '0644'
-  loop:
-    - .gitignore
-    - .dockerignore
-
-- name: Create a Django project skeleton inside our project 
-  command: '{{ webinfra_venv }}/bin/django-admin startproject {{ webinfra_django_project }} .'
-  args:
-    chdir: '{{ webinfra_install_dir }}'
-    creates: '{{ webinfra_django_project }}/__init__.py'
-
-- name: Patch settings.py with convenient customizations
-  ansible.builtin.template:
-    src: django_project/settings.py.j2
-    dest: '{{ webinfra_install_dir }}/{{ webinfra_django_project }}/settings.py'
-    mode: '0644'
-    backup: yes

@@ -1,0 +1,12 @@
+---
+# tasks file for s4a.podman_postgres
+
+- import_tasks: install.yml
+  tags: [setup]
+
+- import_tasks: configure.yml
+  tags: [ configure ]
+
+- include_tasks: configure-{{ ansible_distribution }}.yml
+  tags: [ configure ]
+

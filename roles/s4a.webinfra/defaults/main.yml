@@ -8,10 +8,3 @@ webinfra_install_dir : /tmp
 webinfra_venv:  "{{ webinfra_install_dir }}/.venv"
 # Django project name (subfolder inside webinfra_install_dir)
 webinfra_django_project: django_project
-
-webinfra_postgres_state: absent
-webinfra_postgres_volume: /tmp
-webinfra_pgadmin_port: 80
-
-
-

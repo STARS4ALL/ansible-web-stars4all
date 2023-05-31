@@ -1,0 +1,9 @@
+---
+# tasks file for s4a.webinfra
+- name: Install some build time packages
+  ansible.builtin.package:
+    name:
+      - slirp4netns # podman for rootless environments
+      - podman
+    state: present
+  become_user: root

@@ -1,0 +1,24 @@
+---
+# defaults file for s4a.podman_postgres
+
+# container images
+podman_posgres_dbase_container: docker.io/library/postgres:14
+podman_posgres_admin_container: docker.io/dpage/pgadmin4:latest
+
+# container deployment state
+podman_postgres_state: started
+
+# As seen from outside the container
+podman_postgres_admin_port: 9876
+podman_postgres_dbase_port: 5432
+
+# Volume to mount
+# Must be specified invoking the role
+# podman_postgres_volume: /tmp
+
+# containers and Pod name
+podman_posgres_pod_name:   pg-infra
+podman_posgres_dbase_name: pg-dbase
+podman_posgres_admin_name: pg-admin
+
+

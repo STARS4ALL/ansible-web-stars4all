@@ -1,12 +1,10 @@
 ---
 
 - import_tasks: install.yml
-  tags: [setup ]
+  tags: [ install ]
 
-- include_tasks: firewall-{{ ansible_distribution }}.yml
-
-- import_tasks: postgresql.yml
-  tags: [ postgres ]
+- import_tasks: configure.yml
+  tags: [ configure ]
 
 
 

@@ -6,4 +6,5 @@
     state: enabled
   become_user: root
   loop:
-    - '{{ webinfra_pgadmin_port }}'
+    - '{{ podman_postgres_admin_port }}'
+    - '{{ podman_postgres_dbase_port }}'
