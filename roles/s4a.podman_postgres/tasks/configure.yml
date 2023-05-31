@@ -13,6 +13,7 @@
     state: '{{ podman_postgres_state }}'
     ports:
       - '{{ podman_postgres_admin_port }}:80'
+      - '{{ podman_postgres_dbase_port }}:5432'
 
 - name: Deploy and run a pgadmin container and link it to its infrastructure pod
   containers.podman.podman_container:
