@@ -3,6 +3,8 @@
 - import_tasks: install.yml
   tags: [ install ]
 
+- include_tasks: configure-{{ webinfra_database_model }}.yml
+
 - import_tasks: configure.yml
   tags: [ configure ]
 

@@ -1,0 +1,21 @@
+{% set webinfra_database = lookup("ansible.builtin.env", "DB_NAME", default=Undefined) %}
+{% set webinfra_dbuser   = lookup("ansible.builtin.env", "DB_USER", default=Undefined) %}
+{% set webinfra_dbpasswd = lookup("ansible.builtin.env", "DB_PASSWD", default=Undefined) %}
+
+
+-- Create database if not exists
+SELECT 'CREATE DATABASE {{ webinfra_database }}'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '{{ webinfra_database }}')\gexec
+
+-- Create user if not exists
+SELECT 'CREATE USER {{ webinfra_dbuser }}'
+WHERE NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '{{ webinfra_dbuser }}')\gexec
+
+ALTER ROLE {{ webinfra_dbuser }} WITH PASSWORD '{{ webinfra_dbpasswd }}';
+ALTER ROLE {{ webinfra_dbuser }} SET client_encoding TO 'utf8';
+ALTER ROLE {{ webinfra_dbuser }} SET default_transaction_isolation TO 'read committed';
+ALTER ROLE {{ webinfra_dbuser }} SET timezone TO 'UTC';
+
+GRANT ALL PRIVILEGES ON DATABASE {{ webinfra_database }} TO {{ webinfra_dbuser }};
+
+
