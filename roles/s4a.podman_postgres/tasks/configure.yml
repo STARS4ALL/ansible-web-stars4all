@@ -33,7 +33,7 @@
     image: '{{ podman_posgres_dbase_container }}'
     state: '{{ podman_postgres_state }}'
     volumes:
-      - '{{ podman_postgres_volume }}:/var/lib/postgresql/data :Z'
+      - '{{ podman_postgres_volume }}:/var/lib/postgresql/data:Z'
     env:
         POSTGRES_USER: '{{ lookup("ansible.builtin.env", "POSTGRES_USER", default=Undefined) }}'
         POSTGRES_PASSWORD: '{{ lookup("ansible.builtin.env", "POSTGRES_PASSWORD", default=Undefined) }}'

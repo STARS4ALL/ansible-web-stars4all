@@ -8,7 +8,7 @@
 
   - role: s4a.podman_postgres   
     podman_postgres_state: started
-    podman_postgres_volume: /home/{{ ansible_user }}/postgres
+    podman_postgres_volume: /home/{{ ansible_user }}/postgres/data
     tags: [ postgres ] 
 
   - role: s4a.webinfra   
