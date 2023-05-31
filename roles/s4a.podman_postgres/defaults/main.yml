@@ -2,7 +2,7 @@
 # defaults file for s4a.podman_postgres
 
 # container images
-podman_posgres_dbase_container: docker.io/library/postgres:14
+podman_posgres_dbase_container: docker.io/library/postgres:15
 podman_posgres_admin_container: docker.io/dpage/pgadmin4:latest
 
 # container deployment state
