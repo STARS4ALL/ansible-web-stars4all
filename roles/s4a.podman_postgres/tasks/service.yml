@@ -21,7 +21,7 @@
       - '{{ podman_postgres_dbase_port }}:5432'
 
 # This is not strictly needed but a convenient Web based interface
-- name: Deploy and run a pgadmin container and link it to its infrastructure pod
+- name: Deploy and run a pgadmin container and link it to its pod
   containers.podman.podman_container:
     name: '{{ podman_posgres_admin_name }}'
     pod:  '{{ podman_posgres_pod_name }}'
@@ -31,7 +31,7 @@
         PGADMIN_DEFAULT_EMAIL: '{{ pg_admin_email }}'
         PGADMIN_DEFAULT_PASSWORD: '{{ pg_admin_passwd }}'
 
-- name:  Deploy the PostgreSQL DBMS container and link it to the infrastructure container
+- name:  Deploy the PostgreSQL DBMS container and link it to the pod
   containers.podman.podman_container:
     name: '{{ podman_posgres_dbase_name }}'
     pod:  '{{ podman_posgres_pod_name }}'
