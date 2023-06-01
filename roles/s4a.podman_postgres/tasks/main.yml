@@ -10,3 +10,6 @@
 - include_tasks: configure-{{ ansible_distribution }}.yml
   tags: [ configure ]
 
+- import_tasks: service.yml
+  tags: [ service ]
+

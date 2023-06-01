@@ -5,9 +5,6 @@
 podman_posgres_dbase_container: docker.io/library/postgres:13
 podman_posgres_admin_container: docker.io/dpage/pgadmin4:latest
 
-# container deployment state
-podman_postgres_state: started
-
 # As seen from outside the container
 podman_postgres_admin_port: 9876
 podman_postgres_dbase_port: 5432

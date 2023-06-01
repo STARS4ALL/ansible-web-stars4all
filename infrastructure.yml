@@ -1,13 +1,12 @@
 ---
 
-- hosts: webservers
+- hosts: databases
   become: yes
   become_user: '{{ ansible_user }}'
 
   roles:
 
-  - role: s4a.podman_postgres   
-    podman_postgres_state: started
+  - role: s4a.podman_postgres
     podman_postgres_volume: /home/{{ ansible_user }}/postgres/data
     tags: [ postgres ] 
 

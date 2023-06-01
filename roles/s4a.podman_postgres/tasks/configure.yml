@@ -1,40 +1,11 @@
 ---
 # tasks file for s4a.webinfra
+
+
 - name: Create volume for PostgreSQL data
   ansible.builtin.file:
     path: '{{ podman_postgres_volume }}'
     state: directory
     recurse: yes
     mode: '0755'
-  
-- name: Deploy the PostgreSQL infrastructure pod
-  containers.podman.podman_pod:
-    name:  '{{ podman_posgres_pod_name }}'
-    state: '{{ podman_postgres_state }}'
-    ports:
-      - '{{ podman_postgres_admin_port }}:80'
-      - '{{ podman_postgres_dbase_port }}:5432'
-
-# This is not strictly needed but a convenient Web based interface
-- name: Deploy and run a pgadmin container and link it to its infrastructure pod
-  containers.podman.podman_container:
-    name: '{{ podman_posgres_admin_name }}'
-    pod:  '{{ podman_posgres_pod_name }}'
-    image: '{{ podman_posgres_admin_container }}'
-    state: '{{ podman_postgres_state }}'
-    env:
-        PGADMIN_DEFAULT_EMAIL: '{{ lookup("ansible.builtin.env", "PGADMIN_DEFAULT_EMAIL", default=Undefined) }}'
-        PGADMIN_DEFAULT_PASSWORD: '{{ lookup("ansible.builtin.env", "PGADMIN_DEFAULT_PASSWORD", default=Undefined) }}'
-
-- name:  Deploy the PostgreSQL DBMS container and link it to the infrastructure container
-  containers.podman.podman_container:
-    name: '{{ podman_posgres_dbase_name }}'
-    pod:  '{{ podman_posgres_pod_name }}'
-    image: '{{ podman_posgres_dbase_container }}'
-    state: '{{ podman_postgres_state }}'
-    volumes:
-      - '{{ podman_postgres_volume }}:/var/lib/postgresql/data:Z'
-    env:
-        POSTGRES_USER: '{{ lookup("ansible.builtin.env", "POSTGRES_USER", default=Undefined) }}'
-        POSTGRES_PASSWORD: '{{ lookup("ansible.builtin.env", "POSTGRES_PASSWORD", default=Undefined) }}'
-        POSTGRES_DB: '{{ lookup("ansible.builtin.env", "POSTGRES_DB", default=Undefined) }}'
+  ignore_errors: true  # After container creation, it changes the uid/gid

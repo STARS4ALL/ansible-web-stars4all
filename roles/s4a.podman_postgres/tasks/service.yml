@@ -1,0 +1,45 @@
+---
+# tasks file for s4a.webinfra
+
+- name: get environment variables from Ansible controller
+  ansible.builtin.set_fact:
+    # these are for the DBMS container
+    pg_port: '{{ lookup("ansible.builtin.env", "POSTGRES_PORT", default=Undefined) }}'
+    pg_root: '{{ lookup("ansible.builtin.env", "POSTGRES_USER", default=Undefined) }}'
+    pg_passwd: '{{ lookup("ansible.builtin.env", "POSTGRES_PASSWORD", default=Undefined) }}'
+    pg_database: '{{ lookup("ansible.builtin.env", "POSTGRES_DB", default=Undefined) }}'
+    # These are for the pgadmin container
+    pg_admin_email: '{{ lookup("ansible.builtin.env", "PGADMIN_DEFAULT_EMAIL", default=Undefined) }}'
+    pg_admin_passwd: '{{ lookup("ansible.builtin.env", "PGADMIN_DEFAULT_PASSWORD", default=Undefined) }}'
+
+- name: Deploy the PostgreSQL infrastructure pod
+  containers.podman.podman_pod:
+    name:  '{{ podman_posgres_pod_name }}'
+    state: started
+    ports:
+      - '{{ podman_postgres_admin_port }}:80'
+      - '{{ podman_postgres_dbase_port }}:5432'
+
+# This is not strictly needed but a convenient Web based interface
+- name: Deploy and run a pgadmin container and link it to its infrastructure pod
+  containers.podman.podman_container:
+    name: '{{ podman_posgres_admin_name }}'
+    pod:  '{{ podman_posgres_pod_name }}'
+    image: '{{ podman_posgres_admin_container }}'
+    state: started
+    env:
+        PGADMIN_DEFAULT_EMAIL: '{{ pg_admin_email }}'
+        PGADMIN_DEFAULT_PASSWORD: '{{ pg_admin_passwd }}'
+
+- name:  Deploy the PostgreSQL DBMS container and link it to the infrastructure container
+  containers.podman.podman_container:
+    name: '{{ podman_posgres_dbase_name }}'
+    pod:  '{{ podman_posgres_pod_name }}'
+    image: '{{ podman_posgres_dbase_container }}'
+    state: started
+    volumes:
+      - '{{ podman_postgres_volume }}:/var/lib/postgresql/data:Z'
+    env:
+        POSTGRES_USER: '{{ pg_root }}'
+        POSTGRES_PASSWORD: '{{ pg_passwd }}'
+        POSTGRES_DB: '{{ pg_database }}'

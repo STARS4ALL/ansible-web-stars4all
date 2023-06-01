@@ -5,6 +5,6 @@
     name:
       - slirp4netns # podman for rootless environments
       - podman
-      - postgresql  # client only
+      - postgresql  # interested in client only
     state: present
   become_user: root
