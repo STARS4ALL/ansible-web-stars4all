@@ -25,6 +25,8 @@
       - "psycopg[pool]"
       - "gunicorn~=20.1.0"        # Production Web Server
       - "whitenoise~=6.4.0"       # Serving static files with Django
-      - "environs[django]~=9.5.0" # Fancy handlig on envorinment variables
+      - "environs[django]~=9.5.0" # Fancy handling of environment variables
+      - "djangorestframework~=3.13.0" # The name says it all
+      - "django-cors-headers~=3.10.0" # Cross-Origin Resource Sharing (CORS) headers handling
     virtualenv: '{{ webinfra_venv }}'
     virtualenv_command : python3 -m venv

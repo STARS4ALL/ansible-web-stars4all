@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic', # New
     'django.contrib.staticfiles',
+    # 3rd party
+    "rest_framework", # new
+    "corsheaders", # new
 ]
 
 # The ordering of WhiteNoiseMiddleware in the MIDDLEWARE is very important: 
@@ -51,12 +54,22 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware', # New
+    "corsheaders.middleware.CorsMiddleware", # new
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = (
+    "http://localhost:3000",
+    "http://localhost:8000",
+)
+
+# For React
+CSRF_TRUSTED_ORIGINS = ["localhost:3000"]
+
 
 ROOT_URLCONF = 'django_project.urls'
 
