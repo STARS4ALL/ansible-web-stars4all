@@ -34,7 +34,7 @@ DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 # list of trusted origins for unsafe HTTP requests like POST
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = []
 
 
 # Application definition
@@ -72,7 +72,10 @@ CORS_ALLOWED_ORIGINS = (
 )
 
 # For React
-CSRF_TRUSTED_ORIGINS = ["localhost:3000"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000", 
+    "https://localhost:3000",
+]
 
 
 ROOT_URLCONF = 'django_project.urls'

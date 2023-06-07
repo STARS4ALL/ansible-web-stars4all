@@ -13,6 +13,13 @@
   loop:
     - .gitignore
     - .dockerignore
+    - .cheatsheet.md
+
+- name: Copy .env
+  ansible.builtin.copy:
+    src: '{{ playbook_dir }}/.env'
+    dest: '{{ webinfra_install_dir }}/.env'
+    mode: '0600'
 
 - name: Create a Django project skeleton inside our project 
   command: '{{ webinfra_venv }}/bin/django-admin startproject {{ webinfra_django_project }} .'
