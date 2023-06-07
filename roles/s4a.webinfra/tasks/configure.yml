@@ -21,6 +21,12 @@
     dest: '{{ webinfra_install_dir }}/.env'
     mode: '0600'
 
+- name: Create the 'static/' sub-dir to hold static pages
+  ansible.builtin.file:
+    path: '{{ webinfra_install_dir }}/static'
+    state: directory
+    mode: '0755'
+
 - name: Create a Django project skeleton inside our project 
   command: '{{ webinfra_venv }}/bin/django-admin startproject {{ webinfra_django_project }} .'
   args:
