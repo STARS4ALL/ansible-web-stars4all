@@ -10,6 +10,12 @@
     podman_postgres_volume: /home/{{ ansible_user }}/postgres/data
     tags: [ postgres ] 
 
+- hosts: webservers
+  become: yes
+  become_user: '{{ ansible_user }}'
+
+  roles:
+
   - role: s4a.webinfra   
     webinfra_install_dir : /home/{{ ansible_user }}/repos/own/web-stars4all
     webinfra_venv:        '{{ webinfra_install_dir }}/.venv'  

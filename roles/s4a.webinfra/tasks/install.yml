@@ -4,6 +4,7 @@
   ansible.builtin.package:
     name:
       - git
+      - postgresql  # interested in client only
     state: present
   become_user: root
 
